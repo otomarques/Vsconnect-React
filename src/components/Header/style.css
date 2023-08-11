@@ -1,0 +1,20 @@
+/* HEADER */
+header {
+    background-color: var(--azulP);
+}
+
+.header_conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.menu_barras {
+    display: none;
+    z-index: 1;
+}
+
+.menu_barras>img {
+    width: 50px;
+}
