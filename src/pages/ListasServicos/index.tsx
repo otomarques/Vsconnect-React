@@ -1,10 +1,9 @@
 import "./style.css";
 
-function listaServicos() {
-
+function ListaServicos() {
     return (
-        <div>
-            <main>
+        <>
+            <main id="main_listaservicos">
                 <div className="container container_lista_servicos">
                     <div className="lista_servicos_conteudo">
                         <h1>Lista de Serviços</h1>
@@ -63,8 +62,9 @@ function listaServicos() {
                     </div>
                 </div>
             </main>
-        </div>
-    )
+
+        </>
+    );
 }
 
-export default listaServicos;
+export default ListaServicos;

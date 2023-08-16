@@ -1,105 +1,115 @@
-//estilizaçao
-
-
+//estilização
 import "./style.css";
 
+//components
+import CardDev from "../../components/CardDev";
+
+//hooks
+import { useState } from "react";
+
 function ListaDevs() {
-    return(
-<>
-<main id="main_listasdevs">
-  <div className="container container_lista_devs">
-    <div className="lista_devs_conteudo">
-      <h1>Lista de Devs</h1>
-      <hr />
-      <form method="post">
-        <div className="wrapper_form">
-          <label htmlFor="busca">Procurar desenvolvedores</label>
-          <div className="campo-label">
-            <input
-              type="search"
-              name="campo-busca"
-              id="busca"
-              placeholder="Buscar desenvolvedores por tecnologias..."
-            />
-            <button type="submit">Buscar</button>
-          </div>
-        </div>
-      </form>
-      <div className="wrapper_lista">
-        <ul>
-          <li>
-            <div className="dev">
-              <div className="grupo_contato">
-                <img src="https://github.com/Thiago-Nascimento.png" alt="" />
-                <div className="contato_dev">
-                  <h3>Thiago Nascimento</h3>
-                  <p>thiago@email.com</p>
-                </div>
-              </div>
-              <div className="techs">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>React</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="dev">
-              <div className="grupo_contato">
-                <img src="https://github.com/JessicaSanto.png" alt="" />
-                <div className="contato_dev">
-                  <h3>Jessica Franzon</h3>
-                  <p>jessica@email.com</p>
-                </div>
-              </div>
-              <div className="techs">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>React</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="dev">
-              <div className="grupo_contato">
-                <img src="https://github.com/odirlei-assis.png" alt="" />
-                <div className="contato_dev">
-                  <h3>Odirlei Sabella</h3>
-                  <p>odirlei@email.com</p>
-                </div>
-              </div>
-              <div className="techs">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>React</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="dev">
-              <div className="grupo_contato">
-                <img src="https://github.com/alexiamelhado18.png" alt="" />
-                <div className="contato_dev">
-                  <h3>Aléxia Vitória</h3>
-                  <p>alexia@email.com</p>
-                </div>
-              </div>
-              <div className="techs">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>React</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</main>
 
-</>
+    //STATE DEVS
+    const [devs, setDevs] = useState<any[]>([
+        {
+            img_perfil: "https://github.com/Thiago-Nascimento.png",
+            nome: "Thiago Nascimento",
+            email: "thiago@email.com",
+            skills: ["HTML", "CSS", "REACT"]
+        },
+        {
+            img_perfil: "https://github.com/JessicaSanto.png",
+            nome: "Jessica Franzon",
+            email: "jessica@email.com",
+            skills: ["HTML", "CSS", "React"]
+        },
+        {
+            img_perfil: "https://github.com/odirlei-assis.png",
+            nome: "Odirlei Sabella",
+            email: "odirlei@email.com",
+            skills: ["HTML", "CSS", "React"]
+        },
+        {
+            img_perfil: "https://github.com/alexiamelhado18.png",
+            nome: "Aléxia Vitória",
+            email: "alexia@email.com",
+            skills: ["PYTHON", "VUE", "React"]
+        }
+    ]);
+
+    const [listaDevsFiltrados, setListaDevsFiltrados] = useState<any[]>(devs);
+
+    const [skillDigitado, setSkillDigitado] = useState<string>("");
+
+    //função onde pega o que o usuario digitou
+    function verificarCampoSkill(event: any) {
+        if (event.target.value === "") {
+            setListaDevsFiltrados(devs);
+        }
+        setSkillDigitado(event.target.value);
+    }
+
+    function buscarDevPorSkill(event: any) {
+        //não recarrega a pagina
+        event.preventDefault();
+
+        //filtrar devs pela skill digitada no campo buscar
+        const devsFiltrados = devs.filter((dev: any) => dev.skills.includes(skillDigitado.toLocaleUpperCase()));
+
+        if (devsFiltrados.length === 0) {
+            alert("Nenhum desenvolvedor(a) com essa skill :(")
+        } else {
+            //atribui valor de devs filtrado, ao state ListaDevsFiltrados 
+            setListaDevsFiltrados(devsFiltrados);
+        }
 
 
+    }
+
+    return (
+        <>
+            <main id="main_listadevs">
+                <div className="container container_lista_devs">
+                    <div className="lista_devs_conteudo">
+                        <h1>Lista de Devs</h1>
+                        <hr />
+                        <form method="post" onSubmit={buscarDevPorSkill}>
+                            <div className="wrapper_form">
+                                <label htmlFor="busca">Procurar desenvolvedores</label>
+                                <div className="campo-label">
+                                    <input
+                                        type="search"
+                                        name="campo-busca"
+                                        id="busca"
+                                        placeholder="Buscar desenvolvedores por tecnologias..."
+                                        autoComplete="off"
+                                        onChange={verificarCampoSkill}
+                                    />
+                                    <button type="submit">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div className="wrapper_lista">
+                            <ul>
+                                {
+                                    listaDevsFiltrados.map((dev: any, indice: number) => {
+                                        return <li key={indice}>
+                                            <CardDev
+                                                foto={dev.img_perfil}
+                                                nome={dev.nome}
+                                                email={dev.email}
+                                                listaTechs={dev.skills}
+                                            />
+                                        </li>
+                                    })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </>
     );
 }
 
