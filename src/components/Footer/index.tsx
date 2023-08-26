@@ -1,21 +1,20 @@
-
-// imagens 
+//imagens
 import imgLogo from "../../assets/images/logo.svg";
 import imgDev from "../../assets/images/dev.png";
-import iconface from "../../assets/images/facebook.svg";
-
+import iconFace from "../../assets/images/facebook.svg";
 import iconInsta from "../../assets/images/instagram.svg";
-import iconLink from "../../assets/images/linkedin.svg";
+import iconLinkedin from "../../assets/images/linkedin.svg";
 
-
-//estilizaÇao
+//estilização
 import "./style.css";
 
-//Rotas
-import { Link } from "react-router-dom"; 
-
+//rotas
+import { Link, useLocation } from "react-router-dom";
 
 function Footer() {
+
+    const location = useLocation();
+
 
     return (
         //codigo do footer
@@ -42,13 +41,16 @@ function Footer() {
                                 <Link to={"/"}>Home</Link>
                             </li>
                             <li>
-                                <Link to={"#"}>Listar Serviços</Link>
+                                <Link to={"lista/servicos"}>Listar Serviços</Link>
                             </li>
                             <li>
-                                <Link to={"lista/devs"}>Lista Desenvolvedores</Link>
+                                <Link to={"lista/devs"}>Listar Desenvolvedores</Link>
                             </li>
                             <li>
                                 <Link to={"#"}>Cadastrar Cliente</Link>
+                            </li>
+                            <li>
+                                <Link to={"cadastro/servico"}>Cadastrar Serviço</Link>
                             </li>
                             <li>
                                 <Link to={"#"}>Cadastrar Desenvolvedor</Link>
@@ -59,26 +61,22 @@ function Footer() {
                     <div className="rodape_conteudo_contatos">
                         <h2>Contatos</h2>
                         <div>
-                            <Link to={"/"}><img src={iconface} alt=""/></Link>
-                            <Link to={"/"}><img src={iconInsta} alt=""/></Link>
-                            <Link to={"/"}><img src={iconLink} alt=""/></Link>
-                            
+                            <Link to={"#"}><img src={iconFace} alt="" /></Link>
 
-                           
+                            <Link to={"#"}><img src={iconInsta} alt="" /></Link>
 
+                            <Link to={"#"}>
+                                <img src={iconLinkedin} alt="" />
+                            </Link>
 
-                            
-                           
                         </div>
-                        <a href="mailto:">contato@vsconnect.com</a>
+                        <Link to={"mailto:contato@vsconnect.com"}>contato@vsconnect.com</Link>
                     </div>
                 </div>
                 <p>todos os direitos reservados ©.</p>
             </div>
         </footer>
-
     );
-
 }
 
 export default Footer;
